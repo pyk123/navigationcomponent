@@ -1,9 +1,11 @@
 package com.example.navigationcomponent.Model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 @Entity(tableName = "product_table")
 data class Products(
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id") var id : Int,
     @SerializedName("title") var title : String,
     @SerializedName("description") var description : String,
@@ -13,6 +15,5 @@ data class Products(
     @SerializedName("stock") var stock : Int,
     @SerializedName("brand") var brand : String,
     @SerializedName("category") var category : String,
-    @SerializedName("thumbnail") var thumbnail : String,
-    @SerializedName("images") var images : List<String>
+    @SerializedName("thumbnail") var thumbnail : String
 )

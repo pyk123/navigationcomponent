@@ -16,6 +16,7 @@ import com.example.navigationcomponent.Adapter.productAdapter
 import com.example.navigationcomponent.Model.Products
 import com.example.navigationcomponent.Repository.MainRepository
 import com.example.navigationcomponent.Repository.MainRepository.Productlist
+import com.example.navigationcomponent.Roomdatabase.databaseViewmodel
 import com.example.navigationcomponent.ViewModel.MainViewModel
 import com.example.navigationcomponent.databinding.FragmentHomeBinding
 
@@ -25,6 +26,7 @@ class HomeFragment() : Fragment() , productAdapter.ItemClickListener {
 var productlist= mutableListOf<Products>()
     private lateinit var rvAdapter: productAdapter
     val viewModel: MainViewModel by viewModels()
+    val databaseViewmodel:databaseViewmodel by viewModels()
 
 
 
@@ -62,11 +64,24 @@ var productlist= mutableListOf<Products>()
             Log.e("printdata",""+productList)
             productlist= productList.products.toMutableList()
             // and pass the required argument
-            rvAdapter = productAdapter(this,productlist,)
+            rvAdapter = productAdapter(this,productlist)
 
             // attach adapter to the recycler view
             binding.productlist.adapter = rvAdapter
+
+           databaseViewmodel.insertdata(requireContext(),productlist)
+
+
         })
+
+        binding.btngetdata2.setOnClickListener {
+            databaseViewmodel.getalldata(requireContext())?.observe(requireActivity(), Observer { notifications ->
+                // Update your list or perform any other action with the new data
+                Log.e("data",""+notifications)
+
+            })
+        }
+
 
 
     }
